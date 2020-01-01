@@ -12,7 +12,7 @@ const User = require('../../models/User');
 // @desc    Register user
 // @access  Public
 router.post('/', [
-    check('name', 'Name is required').not().isEmpty(),
+    check('name', 'Name is required').notEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 })
 ], 
@@ -45,7 +45,6 @@ async (req, res) => {
         });
     
         const salt = await bcrypt.genSalt(10);
-
         user.password = await bcrypt.hash(password, salt);
 
         await user.save();
