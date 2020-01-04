@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ isAuthenticated, setAlert, register }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -59,9 +59,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 };
 
 Register.propTypes = {
+    isAuthenticated: PropTypes.bool,
     setAlert: PropTypes.func.isRequired,
-    register: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    register: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
