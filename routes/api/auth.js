@@ -8,6 +8,19 @@ const auth = require('../../middleware/auth');
 
 const User = require('../../models/User');
 
+// @route   GET api/auth
+// @desc    Get current user
+// @access  Public
+router.get('/', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
 // @route   POST api/auth
 // @desc    Login
 // @access  Public
