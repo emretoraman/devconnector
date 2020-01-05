@@ -80,42 +80,24 @@ async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-        company,
-        website,
-        location,
-        bio,
-        status,
-        githubusername,
-        skills,
-        youtube,
-        facebook,
-        twitter,
-        instagram,
-        linkedin
-    } = req.body;
-
     // Build profile object
-    const profileFields = {};
-    profileFields.user = req.user.id;
-    if (company) profileFields.company = company;
-    if (website) profileFields.website = website;
-    if (location) profileFields.location = location;
-    if (bio) profileFields.bio = bio;
-    if (status) profileFields.status = status;
-    if (githubusername) profileFields.githubusername = githubusername;
-    if (skills) {
-        profileFields.skills = skills.split(',').map(skill => skill.trim());
-    }
-
-    // Build social object
-    profileFields.social = {};
-    if (youtube) profileFields.social.youtube = youtube;
-    if (twitter) profileFields.social.twitter = twitter;
-    if (facebook) profileFields.social.facebook = facebook;
-    if (linkedin) profileFields.social.linkedin = linkedin;
-    if (instagram) profileFields.social.instagram = instagram;
-
+    const profileFields = {
+        user: req.user.id,
+        company: req.body.company,
+        website: req.body.website,
+        location: req.body.location,
+        bio: req.body.bio,
+        status: req.body.status,
+        githubusername: req.body.githubusername,
+        skills: (req.body.skills || '').split(',').map(skill => skill.trim()),
+        social: {    
+            youtube: req.body.youtube,
+            facebook: req.body.twitter,
+            twitter: req.body.facebook,
+            instagram: req.body.linkedin,
+            linkedin: req.body.instagram
+        }
+    };
 
     try {
         // Using upsert option (creates new doc if no match is found):

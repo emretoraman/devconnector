@@ -22,24 +22,23 @@ const EditProfile = ({ profile: { profile, loading }, getCurrentProfile, createP
 
     useEffect(() => {
         getCurrentProfile();
-        
         if (!loading) {
             setFormData({
-                company: profile.company || company,
-                website: profile.website || website,
-                location: profile.location || location,
-                status: profile.status || status,
-                skills: profile.skills?.join(',') || skills,
-                githubusername: profile.githubusername || githubusername,
-                bio: profile.bio || bio,
-                twitter: profile.social?.twitter || twitter,
-                facebook: profile.social?.facebook || facebook,
-                linkedin: profile.social?.linkedin || linkedin,
-                youtube: profile.social?.youtube || youtube,
-                instagram: profile.social?.instagram || instagram
+                company: profile?.company ? profile.company : '',
+                website: profile?.website ? profile.website : '',
+                location: profile?.location ? profile.location : '',
+                status: profile?.status ? profile.status : '',
+                skills: profile?.skills ? profile.skills.join(',') : '',
+                githubusername: profile?.githubusername ? profile.githubusername : '',
+                bio: profile?.bio ? profile.bio : '',
+                twitter: profile?.social?.twitter ? profile.social.twitter : '',
+                facebook: profile?.social?.facebook ? profile.social.facebook : '',
+                linkedin: profile?.social?.linkedin ? profile.social.linkedin : '',
+                youtube: profile?.social?.youtube ? profile.social.youtube : '',
+                instagram: profile?.social?.instagram ? profile.social.instagram : ''
             });
         }
-    }, [loading]);
+    }, [loading, getCurrentProfile]);
 
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
