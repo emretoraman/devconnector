@@ -133,10 +133,10 @@ router.delete('/:id/like', auth, async (req, res) => {
     }
 });
 
-// @route   POST api/posts/:id/comment
+// @route   POST api/posts/:post_id/comment
 // @desc    Create comment
 // @access  Private
-router.post('/:id/comment', [ 
+router.post('/:post_id/comment', [ 
     auth, 
     check('text', 'Text is required').notEmpty()
 ],
@@ -159,7 +159,7 @@ async (req, res) => {
     if (text) commentFields.text = text;
 
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findById(req.params.post_id);
         post.comments.unshift(commentFields);
         await post.save();
 
@@ -173,10 +173,10 @@ async (req, res) => {
 // @route   DELETE api/posts/:id/comment/:comment_id
 // @desc    Delete comment
 // @access  Private
-router.delete('/:id/comment/:comment_id', auth, async (req, res) => { 
+router.delete('/:post_id/comment/:id', auth, async (req, res) => { 
     try {
-        const post = await Post.findById(req.params.id);
-        const removeIndex = post.comments.findIndex(comment => comment.id.toString() === req.params.comment_id);
+        const post = await Post.findById(req.params.post_id);
+        const removeIndex = post.comments.findIndex(comment => comment.id.toString() === req.params.id);
         if (removeIndex === -1) {
             return res.status(400).json({ msg: 'There is no comment with this id' });
         }
