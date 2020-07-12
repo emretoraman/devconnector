@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { GET_POSTS, GET_POST, UPDATE_LIKES, POST_ERROR, DELETE_POST, CREATE_POST, CREATE_COMMENT, DELETE_COMMENT } from '../actions/types';
+import { GET_POSTS, GET_POST, UPDATE_LIKES, POST_ERROR, DELETE_POST, CREATE_POST, CREATE_COMMENT, DELETE_COMMENT, CLEAR_POSTS, CLEAR_POST } from '../actions/types';
 import { setAlert } from './alert';
 
 export const getPosts = () => async dispatch => {
     try {
+        dispatch({ type: CLEAR_POSTS });
+
         const res = await axios.get('/api/posts');
 
         dispatch({
@@ -11,8 +13,8 @@ export const getPosts = () => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -20,6 +22,8 @@ export const getPosts = () => async dispatch => {
 
 export const getPost = id => async dispatch => {
     try {
+        dispatch({ type: CLEAR_POST });
+
         const res = await axios.get(`/api/posts/${id}`);
 
         dispatch({
@@ -27,8 +31,8 @@ export const getPost = id => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -50,8 +54,8 @@ export const createPost = formData => async dispatch => {
 
         dispatch(setAlert('Post created', 'success'));
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -68,8 +72,8 @@ export const deletePost = id => async dispatch => {
 
         dispatch(setAlert('Post deleted', 'success'));
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -84,8 +88,8 @@ export const createLike = id => async dispatch => {
             payload: { _id: id, likes: res.data }
         });
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -100,8 +104,8 @@ export const deleteLike = id => async dispatch => {
             payload: { _id: id, likes: res.data }
         });
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -123,8 +127,8 @@ export const createComment = (postId, formData) => async dispatch => {
 
         dispatch(setAlert('Comment created', 'success'));
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
@@ -141,8 +145,8 @@ export const deleteComment = (postId, id) => async dispatch => {
 
         dispatch(setAlert('Comment deleted', 'success'));
     } catch (err) {
-        dispatch({ 
-            type: POST_ERROR, 
+        dispatch({
+            type: POST_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }

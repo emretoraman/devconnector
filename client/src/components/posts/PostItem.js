@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -15,6 +15,8 @@ const PostItem = ({ auth, post: {
     likes,
     comments
 }, showActions = true, createLike, deleteLike, deletePost }) => {
+
+    const [isDeleting, setIsDeleting] = useState(false);
 
     return (
         <div className="post bg-white p-1 my-1">
@@ -41,8 +43,8 @@ const PostItem = ({ auth, post: {
                             Discussion <span className='comment-count'>{comments.length}</span>
                         </Link>
                         {!auth.loading && user === auth.user._id && (
-                            <button type="button" className="btn btn-danger" onClick={() => deletePost(_id)}>
-                                <i className="fas fa-times"></i>
+                            <button type="button" className="btn btn-danger" onClick={() => { deletePost(_id); setIsDeleting(true); }}>
+                                {isDeleting ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-times"></i>}
                             </button>
                         )}
                     </Fragment>

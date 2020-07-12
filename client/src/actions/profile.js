@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_PROFILE, GET_PROFILES, CLEAR_PROFILE, GET_REPOS, PROFILE_ERROR, LOGOUT } from './types';
+import { GET_PROFILE, GET_PROFILES, CLEAR_PROFILE, GET_REPOS, PROFILE_ERROR, LOGOUT, CLEAR_PROFILES, CLEAR_REPOS } from './types';
 
 export const getCurrentProfile = () => async dispatch => {
     try {
+        dispatch({ type: CLEAR_PROFILE });
+
         const res = await axios.get('/api/profile/me');
 
         dispatch({
@@ -20,6 +22,8 @@ export const getCurrentProfile = () => async dispatch => {
 
 export const getProfiles = () => async dispatch => {
     try {
+        dispatch({ type: CLEAR_PROFILES });
+
         const res = await axios.get('/api/profile');
 
         dispatch({
@@ -36,6 +40,8 @@ export const getProfiles = () => async dispatch => {
 
 export const getProfile = user_id => async dispatch => {
     try {
+        dispatch({ type: CLEAR_PROFILE });
+        
         const res = await axios.get(`/api/profile/${user_id}`);
 
         dispatch({
@@ -52,6 +58,8 @@ export const getProfile = user_id => async dispatch => {
 
 export const getRepos = username => async dispatch => {
     try {
+        dispatch({ type: CLEAR_REPOS });
+        
         const res = await axios.get(`/api/profile/github/${username}`);
 
         dispatch({
@@ -67,12 +75,11 @@ export const getRepos = username => async dispatch => {
 }
 
 export const createProfile = (formData, history, edit = false) => async dispatch => {
-    const config = {
-        headers: { 'Content-Type': 'application/json' }
-    };
-    const body = JSON.stringify(formData);
-
-    try {
+    try {    
+        const config = {
+            headers: { 'Content-Type': 'application/json' }
+        };
+        const body = JSON.stringify(formData);
         const res = await axios.post('/api/profile', body, config);
 
         dispatch({
@@ -97,12 +104,12 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 };
 
 export const createExperience = (formData, history) => async dispatch => {
-    const config = {
-        headers: { 'Content-Type': 'application/json' }
-    };
-    const body = JSON.stringify(formData);
-
     try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' }
+        };
+        const body = JSON.stringify(formData);
+    
         const res = await axios.post('/api/profile/experience', body, config);
 
         dispatch({
@@ -125,12 +132,12 @@ export const createExperience = (formData, history) => async dispatch => {
 };
 
 export const createEducation = (formData, history) => async dispatch => {
-    const config = {
-        headers: { 'Content-Type': 'application/json' }
-    };
-    const body = JSON.stringify(formData);
-
     try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' }
+        };
+        const body = JSON.stringify(formData);
+    
         const res = await axios.post('/api/profile/education', body, config);
 
         dispatch({

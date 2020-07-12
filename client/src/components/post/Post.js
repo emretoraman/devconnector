@@ -8,12 +8,12 @@ import PostItem from '../posts/PostItem';
 import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 
-const Post = ({ match, post: { post, loading }, getPost }) => {
+const Post = ({ match, post: { post, loadingPost }, getPost }) => {
     useEffect(() => {
         getPost(match.params.id);
     }, [getPost, match.params.id]);
 
-    return loading || post === null ? <Spinner /> : (
+    return loadingPost || post === null ? <Spinner /> : (
         <Fragment>
             <Link to="/posts" className="btn">Back To Posts</Link>
             <PostItem post={post} showActions={false} />

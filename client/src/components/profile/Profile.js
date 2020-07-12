@@ -10,12 +10,12 @@ import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileGithub from './ProfileGithub';
 
-const Profile = ({ match, profile: { profile, loading }, auth, getProfile }) => {
+const Profile = ({ match, profile: { profile, loadingProfile }, auth, getProfile }) => {
     useEffect(() => {
         getProfile(match.params.id);
     }, [getProfile, match.params.id]);
 
-    return loading || profile === null ? <Spinner /> : (
+    return loadingProfile || profile === null ? <Spinner /> : (
         <Fragment>
             <Link to="/profiles" className="btn btn-light">Back To Profiles</Link>
             {!auth.isLoading && auth.isAuthenticated && auth.user._id === profile.user._id && (
